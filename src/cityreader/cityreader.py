@@ -14,20 +14,34 @@
 #
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
+
+import csv
+
+class City:
+  def __init__(self, name, lat, lon):
+    self.name = name
+    self.lat = lat
+    self.lon = lon
+
 cities = []
 
 def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
-    
-    return cities
+  # IN SRC!!!!
+  with open('./cityreader/cities.csv', newline='') as CSVfile:
+    citylist = csv.reader(CSVfile)
+    for city in citylist:
+      if city[0] != 'city':
+        cities.append(City(city[0], float(city[3]), float(city[4]))) 
+  return cities
 
 cityreader(cities)
 
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
-    print(c)
+    print(c.name, c.lat, c.lon)
 
 # STRETCH GOAL!
 #
@@ -59,13 +73,59 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+# pair1 = input('input first pair of cords in the format lat, lon: ').split(',')
+# if len(pair1) != 2:
+#   print('enter just the first set of lat and long please!')
+#   exit()
+# elif isinstance(float(pair1[0]), float) == False:
+#   print('your first number aint right')
+# elif isinstance(float(pair1[1]), float) == False:
+#   print('oh no number 2 is no good!')
+
+
+# pair2 = input('now a second pair of cords in the same format: ').split(',')
+# if len(pair2) != 2:
+#   print('you did it right the first time you should know how to do this...')
+#   exit()
+# elif isinstance(float(pair2[0]), float) == False:
+#   print('oh no!')
+# elif isinstance(float(pair2[1]), float) == False:
+#   print('oh no number 2 is no good!')
+
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
   within = []
+  lat1= float(lat1)
+  lat2= float(lat2)
+  lon1= float(lon1)
+  lon2= float(lon2)
+  if isinstance(lat1, float) == False or isinstance(lon1, float) == False or isinstance(lat2, float) == False or isinstance(lon2, float) == False:
+    print('numbers no good')
+    exit()
 
+  if lat1 > lat2:
+    lowlat = lat2
+    highlat = lat1
+  else:
+    lowlat = lat1
+    highlat = lat2
+
+  if lon1 > lon2:
+    lowlon = lon2
+    highlon = lon1
+  else:
+    lowlon = lon1
+    highlon = lon2
+
+  for city in cities:
+    if lowlat < city.lat < highlat:
+      if lowlon < city.lon < highlon:
+        within.append(city)
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
+  print(within)
   return within
+
