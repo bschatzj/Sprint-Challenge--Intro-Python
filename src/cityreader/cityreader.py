@@ -30,7 +30,7 @@ def cityreader(cities=[]):
   # For each city record, create a new City instance and add it to the 
   # `cities` list
   # IN SRC!!!!
-  with open('./cityreader/cities.csv', newline='') as CSVfile:
+  with open('./cities.csv', newline='') as CSVfile:
     citylist = csv.reader(CSVfile)
     for city in citylist:
       if city[0] != 'city':
@@ -100,7 +100,7 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   lat2= float(lat2)
   lon1= float(lon1)
   lon2= float(lon2)
-  if isinstance(lat1, float) == False or isinstance(lon1, float) == False or isinstance(lat2, float) == False or isinstance(lon2, float) == False:
+  if not isinstance(lat1, float) or isinstance(lon1, float) == False or isinstance(lat2, float) == False or isinstance(lon2, float) == False:
     print('numbers no good')
     exit()
 
